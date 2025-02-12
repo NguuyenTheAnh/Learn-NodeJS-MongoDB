@@ -1,5 +1,7 @@
-const getHomePage = (req, res) => {
-    res.send('Hello World!')
+const db = require('../config/database');
+
+const getHomePage = async (req, res) => {
+    res.render('home.ejs')
 }
 const getABC = (req, res) => {
     res.send('Hello Anh!')
