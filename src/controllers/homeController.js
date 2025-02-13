@@ -1,5 +1,4 @@
-const db = require('../config/database');
-const { getAllUsers, getUserById, updateUser, deleteUser } = require('../services/CRUDServices');
+const { getUserById, updateUser, deleteUser } = require('../services/CRUDServices');
 
 const User = require('../models/user');
 
@@ -23,13 +22,13 @@ const postCreateUser = async (req, res) => {
 
 const getUpdatePage = async (req, res) => {
     const userId = req.params.id;
-    const results = await getUserById(userId);
+    const results = await User.findById(userId).exec();
     res.render('edit.ejs', { user: results });
 }
 
 const postUpdateUser = async (req, res) => {
     const { email, name, city, userId } = req.body;
-    await updateUser(email, name, city, userId);
+    await User.updateOne({ _id: userId }, { email: email, name: name, city: city });
     res.redirect('/');
 }
 
