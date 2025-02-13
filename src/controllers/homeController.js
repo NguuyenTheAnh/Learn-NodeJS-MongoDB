@@ -4,14 +4,8 @@ const { getAllUsers, getUserById, updateUser, deleteUser } = require('../service
 const User = require('../models/user');
 
 const getHomePage = async (req, res) => {
-    const results = [];
+    const results = await User.find({});
     res.render('home.ejs', { listUsers: results });
-}
-const getABC = (req, res) => {
-    res.send('Hello Anh!')
-}
-const getAnh = (req, res) => {
-    res.render('sample.ejs')
 }
 
 const getCreatePage = (req, res) => {
@@ -53,8 +47,6 @@ const postDeleteUser = async (req, res) => {
 
 module.exports = {
     getHomePage,
-    getABC,
-    getAnh,
     postCreateUser,
     getCreatePage,
     getUpdatePage,

@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { getHomePage, getABC, getAnh,
+const { getHomePage,
     postCreateUser, getCreatePage, getUpdatePage,
     postUpdateUser,
     getDeletePage,
     postDeleteUser
 } = require('../controllers/homeController');
 
+// home page
 router.get('/', getHomePage)
-router.get('/abc', getABC)
-router.get('/anh', getAnh)
 
 // create page
 router.get('/create', getCreatePage);
