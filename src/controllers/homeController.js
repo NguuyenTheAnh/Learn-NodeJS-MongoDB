@@ -1,8 +1,10 @@
 const db = require('../config/database');
 const { getAllUsers, getUserById, updateUser, deleteUser } = require('../services/CRUDServices');
 
+const User = require('../models/user');
+
 const getHomePage = async (req, res) => {
-    const results = await getAllUsers();
+    const results = [];
     res.render('home.ejs', { listUsers: results });
 }
 const getABC = (req, res) => {
@@ -17,11 +19,11 @@ const getCreatePage = (req, res) => {
 }
 const postCreateUser = async (req, res) => {
     let { email, name, city } = req.body;
-    db.query(
-        `insert into users (email,name,city)
-         values ($1,$2,$3);`,
-        [email, name, city]
-    );
+    await User.create({
+        email: email,
+        name: name,
+        city: city
+    });
     res.send('Create user successfully!');
 }
 

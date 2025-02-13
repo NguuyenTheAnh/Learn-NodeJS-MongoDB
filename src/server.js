@@ -1,7 +1,6 @@
 const express = require('express');
 const path = require('path');
 require('dotenv').config();
-const mongoose = require('mongoose');
 const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
 const connection = require('./config/database');
@@ -15,15 +14,6 @@ configViewEngine(app);
 
 // define route
 app.use('/', webRoutes);
-
-// test 
-
-const kittySchema = new mongoose.Schema({
-    name: String
-});
-const Kitten = mongoose.model('Kitten', kittySchema);
-const silence = new Kitten({ name: `Anh's Silence` });
-silence.save();
 
 (async () => {
     try {

@@ -13,7 +13,7 @@ router.get('/anh', getAnh)
 
 // create page
 router.get('/create', getCreatePage);
-router.post('/create-user', postCreateUser)
+router.post('/create-user', postCreateUser);
 
 // update page
 router.get('/update/:id', getUpdatePage);
