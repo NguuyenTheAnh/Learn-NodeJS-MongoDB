@@ -1,15 +1,22 @@
-const pg = require('pg');
 require('dotenv').config();
+const mongoose = require('mongoose');
 
-const db = new pg.Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-    max: 20,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000
-});
+const dbState = [
+    { value: 0, label: "disconnected" },
+    { value: 1, label: "connected" },
+    { value: 2, label: "connecting" },
+    { value: 3, label: "disconnecting" }
+];
 
-module.exports = db;
+
+const connection = async () => {
+    const options = {
+        user: process.env.DB_USER,
+        pass: process.env.DB_PASSWORD
+    };
+    await mongoose.connect(process.env.DB_URI, options);
+    const state = Number(mongoose.connection.readyState);
+    console.log(dbState.find(f => f.value === state).label, "to db"); // connected to db
+}
+
+module.exports = connection;

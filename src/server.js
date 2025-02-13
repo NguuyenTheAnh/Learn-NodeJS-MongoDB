@@ -3,6 +3,7 @@ const path = require('path');
 require('dotenv').config();
 const configViewEngine = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
+const connection = require('./config/database');
 
 const app = express();
 const port = process.env.PORT;
@@ -14,6 +15,14 @@ configViewEngine(app);
 // define route
 app.use('/', webRoutes);
 
-app.listen(port, hostname, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+// test connection
+(async () => {
+    try {
+        await connection();
+        app.listen(port, hostname, () => {
+            console.log(`Backend zero app listening on port ${port}`)
+        });
+    } catch (error) {
+        console.log('>>> Error connect to DB: ', error);
+    }
+})();
