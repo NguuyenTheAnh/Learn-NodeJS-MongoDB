@@ -1,5 +1,3 @@
-const { getUserById, updateUser, deleteUser } = require('../services/CRUDServices');
-
 const User = require('../models/user');
 
 const getHomePage = async (req, res) => {
