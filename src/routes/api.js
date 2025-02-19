@@ -4,7 +4,8 @@ const {
     postMultipleFiles
 } = require('../controllers/apiController');
 const { postCreateCustomer, postCreateArrayCustomer, getAllCustomers, putUpdateCustomer, deleteACustomer, deleteArrayCustomers } = require('../controllers/customerController');
-const { postCreateEmptyProject, getProject } = require('../controllers/projectController');
+const { postCreateEmptyProject, getProject, deleteProject, putUpdateProject } = require('../controllers/projectController');
+const { postCreateTask, getTask, putUpdateTask, deleteTask } = require('../controllers/taskController');
 const router = express.Router();
 
 router.get('/users', getAllUsers);
@@ -24,5 +25,12 @@ router.delete('/customers-many', deleteArrayCustomers); // input: array customer
 
 router.post('/projects', postCreateEmptyProject);
 router.get('/projects', getProject);
+router.delete('/projects', deleteProject);
+router.put('/projects', putUpdateProject);
+
+router.post('/tasks', postCreateTask);
+router.get('/tasks', getTask);
+router.delete('/tasks', deleteTask);
+router.put('/tasks', putUpdateTask);
 
 module.exports = router;
