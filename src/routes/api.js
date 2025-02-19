@@ -4,7 +4,7 @@ const {
     postMultipleFiles
 } = require('../controllers/apiController');
 const { postCreateCustomer, postCreateArrayCustomer, getAllCustomers, putUpdateCustomer, deleteACustomer, deleteArrayCustomers } = require('../controllers/customerController');
-const { postCreateEmptyProject } = require('../controllers/projectController');
+const { postCreateEmptyProject, getProject } = require('../controllers/projectController');
 const router = express.Router();
 
 router.get('/users', getAllUsers);
@@ -23,5 +23,6 @@ router.delete('/customers', deleteACustomer);
 router.delete('/customers-many', deleteArrayCustomers); // input: array customers
 
 router.post('/projects', postCreateEmptyProject);
+router.get('/projects', getProject);
 
 module.exports = router;

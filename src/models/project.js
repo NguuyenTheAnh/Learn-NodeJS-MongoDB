@@ -22,9 +22,9 @@ const projectSchema = new mongoose.Schema(
         endDate: String,
         description: String,
         customerInfo: customerSchema,
-        usersInfo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        usersInfo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user' }],
         leader: userSchema,
-        tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Task' }]
+        tasks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'task' }]
     },
     {
         timestamps: true, // createdAt, updatedAt
