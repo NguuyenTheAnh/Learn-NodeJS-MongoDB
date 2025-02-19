@@ -1,34 +1,45 @@
 const { createCustomerService, createArrayCustomerService, getAllCustomersService, updateCustomer, deleteACustomerService, deleteArrayCustomersService } = require("../services/customerServices");
 const { uploadSingleFile } = require("../services/fileUpload");
+const Joi = require('joi');
 
 const postCreateCustomer = async (req, res) => {
 
     let { name, address, phone, email, description } = req.body;
-    let imageURL = "";
-    // name: {
-    //     type: String,
-    //     require: true
-    // },
-    // address: String,
-    // phone: String,
-    // email: String,
-    // image: String,
-    // description: String
 
-    if (!req.files || Object.keys(req.files).length === 0) {
-        // do nothing
+    // validation
+    const schema = Joi.object({
+        name: Joi.string()
+            .alphanum()
+            .min(3)
+            .max(30)
+            .required(),
+        address: Joi.string(),
+        phone: Joi.string().pattern(new RegExp('^[0-9]{8,11}$')),
+        email: Joi.string().email(),
+        description: Joi.string(),
+    })
+    const { error } = schema.validate(req.body);
+    if (error) {
+        return res.json({ EC: -1, Error: error });
     }
+
     else {
-        let results = await uploadSingleFile(req.files.image);
-        imageURL = results.data.path;
-    }
-    let customerData = { name, address, phone, email, description, image: imageURL };
-    let customer = await createCustomerService(customerData);
+        let imageURL = "";
+        if (!req.files || Object.keys(req.files).length === 0) {
+            // do nothing
+        }
+        else {
+            let results = await uploadSingleFile(req.files.image);
+            imageURL = results.data.path;
+        }
+        let customerData = { name, address, phone, email, description, image: imageURL };
+        let customer = await createCustomerService(customerData);
 
-    res.json({
-        EC: 0,
-        data: customer
-    });
+        res.json({
+            EC: 0,
+            data: customer
+        });
+    }
 }
 
 const postCreateArrayCustomer = async (req, res) => {
